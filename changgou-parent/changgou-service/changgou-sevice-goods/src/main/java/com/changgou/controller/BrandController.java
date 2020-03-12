@@ -2,9 +2,9 @@ package com.changgou.controller;
 
 import com.changgou.goods.pojo.Brand;
 import com.changgou.service.BrandService;
+import com.github.pagehelper.PageInfo;
 import entity.Result;
 import entity.StatusCode;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -77,5 +77,40 @@ public class BrandController {
     public Result delete(@PathVariable("id") Integer id){
         brandService.delete(id);
         return new Result(true,StatusCode.OK,"删除成功");
+    }
+
+    /**
+     * 多条件搜索品牌数据
+     * @param brand
+     * @return
+     */
+    @PostMapping("search")
+    public Result<List<Brand>> findList(@RequestBody(required = false) Brand brand){
+        List<Brand> brands=brandService.findList(brand);
+        return new Result<>(true,StatusCode.OK,"查询成功",brands);
+    }
+
+    /**
+     * 分页搜索
+     * @param page
+     * @param size
+     * @return
+     */
+    @GetMapping("search/{page}/{size}")
+    public Result<PageInfo> findPage(@PathVariable int page,@PathVariable int size){
+        PageInfo<Brand> brandPageInfo = brandService.findPage(page, size);
+        return new Result<>(true,StatusCode.OK,"查询成功",brandPageInfo);
+    }
+    /**
+     * 条件分页搜索
+     * @param brand
+     * @param page
+     * @param size
+     * @return
+     */
+    @PostMapping("search/{page}/{size}")
+    public Result<PageInfo> findPage(@RequestBody(required = false) Brand brand,@PathVariable int page,@PathVariable int size){
+        PageInfo<Brand> brandPageInfo = brandService.findPage(brand,page, size);
+        return new Result<>(true,StatusCode.OK,"查询成功",brandPageInfo);
     }
 }
