@@ -21,10 +21,14 @@ public class FileController {
     @PostMapping
     public Result upload(@RequestParam(value = "file")MultipartFile file) throws Exception{
         //封装文件信息
-        FastDFSFile fastDFSFile = new FastDFSFile(file.getOriginalFilename(),file.getBytes(), StringUtils.getFilenameExtension(file.getOriginalFilename()));
+        FastDFSFile fastDFSFile = new FastDFSFile(
+                file.getOriginalFilename(),
+                file.getBytes(),
+                StringUtils.getFilenameExtension(file.getOriginalFilename())
+        );
 
         //上传文件
-        FastDFSUtil.upload(fastDFSFile);
-        return new Result(true, StatusCode.OK,"上传成功");
+        String[] upload = FastDFSUtil.upload(fastDFSFile);
+        return new Result(true, StatusCode.OK,"上传成功",FastDFSUtil.getTrackerUrl()+"/"+upload[0]+"/"+upload[1]);
     }
 }
