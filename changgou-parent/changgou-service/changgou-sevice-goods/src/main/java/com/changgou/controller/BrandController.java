@@ -5,6 +5,7 @@ import com.changgou.service.BrandService;
 import com.github.pagehelper.PageInfo;
 import entity.Result;
 import entity.StatusCode;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -112,5 +113,16 @@ public class BrandController {
     public Result<PageInfo> findPage(@RequestBody(required = false) Brand brand,@PathVariable int page,@PathVariable int size){
         PageInfo<Brand> brandPageInfo = brandService.findPage(brand,page, size);
         return new Result<>(true,StatusCode.OK,"查询成功",brandPageInfo);
+    }
+
+    /**
+     * 根据分类实现品牌列表查询
+     * @param categoryId
+     * @return
+     */
+    @GetMapping("category/{id}")
+    public Result<List<Brand>> findBrandByCategory(@PathVariable(value = "id")Integer categoryId){
+        List<Brand> brandList = brandService.findByCategory(categoryId);
+        return new Result<>(true,StatusCode.OK,"查询成功",brandList);
     }
 }

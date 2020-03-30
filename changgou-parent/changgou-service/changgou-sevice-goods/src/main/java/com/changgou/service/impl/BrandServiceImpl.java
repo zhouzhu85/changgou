@@ -100,4 +100,9 @@ public class BrandServiceImpl implements BrandService {
         Example example = createExample(brand);
         return new PageInfo<>(brandMapper.selectByExample(example));
     }
+
+    @Override
+    public List<Brand> findByCategory(Integer categoryId) {
+        return brandMapper.findByCategory(categoryId);
+    }
 }
