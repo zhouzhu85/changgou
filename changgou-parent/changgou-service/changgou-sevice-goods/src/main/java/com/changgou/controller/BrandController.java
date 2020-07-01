@@ -30,6 +30,13 @@ public class BrandController {
      */
     @GetMapping
     public Result<List<Brand>> findAll(){
+        System.out.println("准备休眠，测试并发数量："+Thread.currentThread().getName());
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("休眠结束，测试并发数量："+Thread.currentThread().getName());
         List<Brand> brands = brandService.findAll();
         return new Result<List<Brand>>(true, StatusCode.OK,"查询品牌集合成功！",brands);
     }

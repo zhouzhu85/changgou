@@ -66,4 +66,11 @@ public interface SkuService {
      * @return
      */
     List<Sku> findAll();
+
+    /**
+     * 根据状态查询sku列表
+     * @param status
+     * @return
+     */
+    List<Sku> findByStatus(String status);
 }

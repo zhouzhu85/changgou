@@ -1,16 +1,20 @@
 package com.changgou.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.changgou.dao.SkuMapper;
+import com.changgou.goods.feign.SkuFeign;
 import com.changgou.goods.pojo.Sku;
 import com.changgou.service.SkuService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import entity.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
+import java.util.Map;
 
 /****
  * @Author:shenkunlin
@@ -207,4 +211,17 @@ public class SkuServiceImpl implements SkuService {
     public List<Sku> findAll() {
         return skuMapper.selectAll();
     }
+
+    /**
+     * 根据状态查询sku列表
+     * @param status
+     * @return
+     */
+    @Override
+    public List<Sku> findByStatus(String status) {
+        Sku sku = new Sku();
+        sku.setStatus(status);
+        return skuMapper.select(sku);
+    }
+
 }
