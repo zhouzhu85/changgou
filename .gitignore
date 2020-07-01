@@ -9,6 +9,7 @@ target/
 .DS_Store
 .settings/
 .idea/
+code-template/
 out/
 bin/
 intellij/
